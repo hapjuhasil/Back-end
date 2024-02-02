@@ -1,1 +1,39 @@
+spring:
+  mvc:
+    log-resolved-exception: false
+  datasource:
+    url: jdbc:mysql://hapjuhasildb.cirzyy7zyuuv.ap-northeast-2.rds.amazonaws.com:3306
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: hapjuhasil
+  jpa:
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+
+hapjuhasil:
+  openapi:
+    dev-url: http://localhost:8080
+    prod-url: 43.201.22.30
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: hapjuhasil
+    stack:
+      auto: false
+    credentials:
+      secret-key: AKIAV4HHR2BCZD5PSBDJ
+      access-key: oamyiI9nSIbYwgJEuL/yf9vecejVyEmiQKF7NM19
 
