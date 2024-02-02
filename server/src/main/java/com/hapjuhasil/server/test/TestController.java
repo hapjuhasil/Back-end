@@ -1,4 +1,4 @@
-package com.hapjuhasil.server.controller;
+package com.hapjuhasil.server.test;
 
 import com.hapjuhasil.server.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
 public class TestController {
 
-    private S3Service s3Service;
+    private final S3Service s3Service;
+
     @GetMapping("/test")
     public String basicTest(){
         return "test";

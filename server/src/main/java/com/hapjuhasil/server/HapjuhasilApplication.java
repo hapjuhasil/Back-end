@@ -9,6 +9,9 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 public class HapjuhasilApplication {
+	static {
+		System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(HapjuhasilApplication.class, args);

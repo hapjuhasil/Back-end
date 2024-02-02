@@ -25,6 +25,15 @@ hapjuhasil:
     dev-url: http://localhost:8080
     prod-url: 43.201.22.30
 
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
+
+
 cloud:
   aws:
     region:
@@ -34,6 +43,6 @@ cloud:
     stack:
       auto: false
     credentials:
-      secret-key: AKIAV4HHR2BCZD5PSBDJ
-      access-key: oamyiI9nSIbYwgJEuL/yf9vecejVyEmiQKF7NM19
+      secretkey: AKIAV4HHR2BCZD5PSBDJ
+      accesskey: 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
 
