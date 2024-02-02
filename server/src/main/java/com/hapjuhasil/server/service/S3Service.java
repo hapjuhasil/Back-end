@@ -1,5 +1,6 @@
 package com.hapjuhasil.server.service;
 
+
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -22,7 +23,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class S3Service {
     private AmazonS3 s3Client;
-
 
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
@@ -58,13 +58,10 @@ public class S3Service {
 
         s3Client.putObject(bucket, s3FileName, multipartFile.getInputStream(), objMeta);
 
-        // CloudFront 도메인 이름을 사용하지 않으므로, S3 직접 접근하는 URL 반환
-        return "https://" + bucket + ".s3.amazonaws.com/" + s3FileName;
+        return "/"+s3FileName;
     }
 
     public void deleteFile(String fileName) {
-        String delFileName = fileName.substring(fileName.lastIndexOf('/') + 1); // 파일 이름만 추출
-        s3Client.deleteObject(new DeleteObjectRequest(bucket, delFileName));
+        s3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
 }
-//cloudfront안쓰는 방법
