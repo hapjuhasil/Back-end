@@ -24,7 +24,7 @@ public class TestController {
         return this.s3Service.upload(file);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteTest")
     public String deleteTest(String name){
         this.s3Service.deleteFile(name);
         return "success";
