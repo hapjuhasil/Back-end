@@ -1,5 +1,4 @@
 # 🍃 Back-end
-***
 
 - ## 🔨 Architecture
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-square&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Data Jpa-6DB33F?style=flat-square&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-square&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> ![JWT](https://img.shields.io/badge/JWT-black?style=for-square&logo=JSON%20web%20tokens) ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-square&logo=nginx&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-square&logo=githubactions&logoColor=white) 
