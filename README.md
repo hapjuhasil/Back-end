@@ -14,7 +14,7 @@
 
 <br>
 
-## **📌 Commit Convention**
+## **📎 Commit Convention**
 
 - 형식: `태그: 커밋내용`
 
