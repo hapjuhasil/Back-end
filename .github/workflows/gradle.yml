@@ -31,12 +31,12 @@ jobs:
         run: echo $DEV_SECRET | base64 --decode >> $DEV_SECRET_DIR/$DEV_SECRET_DIR_FILE_NAME
           
       # (4) ./gradlew 권한 설정
-      - name: ./gradlew 권한 설정
-        run: chmod +x ./gradlew
+      - name: server/gradlew 권한 설정
+        run: chmod +x server/gradlew
 
       # (5) Gradle build (Test 제외)
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: server/gradlew build -x test
 
       # (6) docker build & push to production
       - name: Docker build & push to DockerHub
