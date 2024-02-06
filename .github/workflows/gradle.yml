@@ -43,6 +43,8 @@ jobs:
       - name: Docker build & push to DockerHub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_REPO }} .
+          docker push ${{ secrets.DOCKER_REPO }}
         
 
       # (7) GET GitHub IP
@@ -58,10 +60,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
           
-      # (9) Add github ip to AWS
-      - name: Add GitHub IP to AWS
-        run: |
-          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+      ## deploy.sh 파일 서버로 전달하기(복사 후 붙여넣기)
+      - name: Send deploy.sh
+        uses: appleboy/scp-action@master
+        with:
+          username: ubuntu
+          host: ${{ secrets.DEV_HOST }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          source: "./deploy.sh"
+          target: "/home/ubuntu/"
 
       # (10) 서버에 접속하여 도커 이미지를 pull 받고 실행하기
       - name: executing remote ssh commands using password
@@ -72,18 +80,13 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            sudo docker stop spring-dev
-            sudo docker rm spring-dev
-            sudo docker image rm ${{ secrets.DOCKER_REPO }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest-dev
-            sudo docker run -d --name spring-dev -p 8080:8080 -e spring.profiles.active=dev-env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest-dev
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+            sudo docker run -d --name spring-dev -p 8080:8080 -e spring.profiles.active=dev-env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+              chmod 777 ./deploy.sh
+              ./deploy.sh
+              docker image prune -f
 
-      # (11) REMOVE Github IP FROM security group
-      - name: Remove IP FROM security group
-        run: |
-          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
-
-          ## gradle caching
+    
       
       - name: Gradle Caching
         uses: actions/cache@v3
