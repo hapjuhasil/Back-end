@@ -36,7 +36,8 @@ jobs:
 
       # (5) Gradle build (Test 제외)
       - name: Build with Gradle
-        run: server/gradlew build -x test
+        run: ./gradlew build -x test
+        working-directory: server
 
       # (6) docker build & push to production
       - name: Docker build & push to DockerHub
