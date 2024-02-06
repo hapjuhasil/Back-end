@@ -27,7 +27,7 @@ jobs:
         env:
           DEV_SECRET: ${{ secrets.APPLICATION_DEV_YML }}
           DEV_SECRET_DIR: src/main/resources
-          DEV_SECRET_DIR_FILE_NAME: application-dev.yml
+          DEV_SECRET_DIR_FILE_NAME: application.yml
         run: echo $DEV_SECRET | base64 --decode >> $DEV_SECRET_DIR/$DEV_SECRET_DIR_FILE_NAME
           
       # (4) ./gradlew 권한 설정
