@@ -72,22 +72,18 @@ jobs:
           source: "server/deploy.sh"
           target: "/home/ubuntu/"
 
-      # (10) 서버에 접속하여 도커 이미지를 pull 받고 실행하기
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v0.1.6
+       ## 도커 허브에서 jar파일 및 pull후에 컴포즈 up
+      - name: Deploy to Dev
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DEV_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
+          username: ubuntu
+          host: ${{ secrets.HOST }}
           key: ${{ secrets.KEY }}
-          port: 22
           script: |
-            cd server
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
-            sudo docker run -d --name spring-dev -p 8080:8080 -e spring.profiles.active=dev-env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
-              chmod 777 server/deploy.sh
-              ./deploy.sh
-              docker image prune -f
-
+            sudo docker pull ${{ secrets.DOCKER_REPO }}
+            chmod 777 ./deploy.sh
+            ./deploy.sh
+            docker image prune -f
     
       
       - name: Gradle Caching
