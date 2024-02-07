@@ -81,10 +81,11 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
+            cd server
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             sudo docker run -d --name spring-dev -p 8080:8080 -e spring.profiles.active=dev-env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
               chmod 777 server/deploy.sh
-              server/deploy.sh
+              ./deploy.sh
               docker image prune -f
 
     
