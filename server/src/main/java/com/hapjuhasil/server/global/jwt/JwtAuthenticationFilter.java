@@ -44,6 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+
     private long getMemberId(String token) {
         return jwtTokenProvider.getUserFromJwt(token);
     } //사용자 ID 추출
