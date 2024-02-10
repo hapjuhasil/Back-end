@@ -1,4 +1,4 @@
-package com.hapjuhasil.server.service;
+package com.hapjuhasil.server.global.s3;
 
 
 import com.amazonaws.auth.AWSCredentials;
