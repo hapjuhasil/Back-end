@@ -32,7 +32,7 @@ if [ -z $IS_GREEN  ];then # blue라면
 
   echo "5. blue container down"
   docker-compose -p hapjuhasil stop blue
-if [ -z $IS_BLUE  ];then
+elif [ -z $IS_BLUE  ];then
   echo "### GREEN => BLUE ###"
 
   echo "1. get blue image"
