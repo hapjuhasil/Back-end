@@ -3,9 +3,9 @@
 IS_GREEN=$(docker ps --filter "name=^/green$" --format "{{.Names}}")
 IS_BLUE=$(docker ps --filter "name=^/blue$" --format "{{.Names}}")
 
-DEFAULT_CONF=" /etc/nginx/nginx.conf"
+DEFAULT_CONF="/etc/nginx/nginx.conf"
 
-if [ "$IS_BLUE" == "blue"  ];then # blue라면
+if [ "$IS_GREEN" != "green" ]; then # green이 실행 중이지 않다면
 
   echo "### BLUE => GREEN ####"
 
@@ -15,15 +15,15 @@ if [ "$IS_BLUE" == "blue"  ];then # blue라면
   echo "2. green container up"
   docker-compose -p hapjuhasil up -d green # green 컨테이너 실행
 
-  while [ 1 = 1 ]; do
-  echo "3. green health check..."
-  sleep 3
+  while true; do
+    echo "3. green health check..."
+    sleep 3
 
-  REQUEST=$(curl http://127.0.0.1:8081) # green으로 request
-    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지a
-            echo "health check success"
-            break ;
-            fi
+    REQUEST=$(curl -s http://127.0.0.1:8081) # green으로 request
+    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지
+      echo "health check success"
+      break
+    fi
   done;
 
   echo "4. reload nginx"
@@ -32,7 +32,8 @@ if [ "$IS_BLUE" == "blue"  ];then # blue라면
 
   echo "5. blue container down"
   docker-compose -p hapjuhasil stop blue
-elif [ "$IS_GREEN" == "green" ];then
+
+elif [ "$IS_BLUE" != "blue" ]; then # blue가 실행 중이지 않다면
   echo "### GREEN => BLUE ###"
 
   echo "1. get blue image"
@@ -41,14 +42,14 @@ elif [ "$IS_GREEN" == "green" ];then
   echo "2. blue container up"
   docker-compose -p hapjuhasil up -d blue
 
-  while [ 1 = 1 ]; do
+  while true; do
     echo "3. blue health check..."
     sleep 3
-    REQUEST=$(curl http://127.0.0.1:8080) # blue로 request
+    REQUEST=$(curl -s http://127.0.0.1:8080) # blue로 request
 
     if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지
       echo "health check success"
-      break ;
+      break
     fi
   done;
 
