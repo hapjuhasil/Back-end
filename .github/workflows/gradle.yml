@@ -94,7 +94,6 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.KEY }}
           script: |
-            cd server
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             chmod 777 deploy.sh
             ./deploy.sh      
