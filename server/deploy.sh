@@ -1,11 +1,11 @@
 #!/bin/bash
 
-IS_GREEN=$(docker ps | grep green) # 현재 실행중인 App이 blue인지 확인합니다.
-IS_BLUE=$(docker ps | grep blue)
+IS_GREEN=$(docker ps --filter "name=^/green$" --format "{{.Names}}")
+IS_BLUE=$(docker ps --filter "name=^/blue$" --format "{{.Names}}")
 
 DEFAULT_CONF=" /etc/nginx/nginx.conf"
 
-if [ -z $IS_GREEN  ];then # blue라면
+if [ "$IS_BLUE" == "blue"  ];then # blue라면
 
   echo "### BLUE => GREEN ####"
 
@@ -32,7 +32,7 @@ if [ -z $IS_GREEN  ];then # blue라면
 
   echo "5. blue container down"
   docker-compose -p hapjuhasil stop blue
-elif [ -z $IS_BLUE  ];then
+elif [ "$IS_GREEN" == "green" ];then
   echo "### GREEN => BLUE ###"
 
   echo "1. get blue image"
