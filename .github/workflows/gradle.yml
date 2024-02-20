@@ -97,7 +97,8 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             chmod 777 server/deploy.sh
             server/deploy.sh
-            docker image prune -f
+            cd server
+            sudo docker image prune -f
     
       
       - name: Gradle Caching
