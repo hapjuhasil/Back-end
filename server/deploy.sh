@@ -29,7 +29,7 @@ if [ -z $IS_GREEN  ];then # blue라면
   sudo nginx -s reload
 
   echo "5. blue container down"
-  docker-compose stop blue
+  docker-compose p hapjuhasil stop blue
 else
   echo "### GREEN => BLUE ###"
 
@@ -55,5 +55,5 @@ else
   sudo nginx -s reload
 
   echo "5. green container down"
-  docker-compose stop green
+  docker-compose p hapjuhasil stop green
 fi
