@@ -8,17 +8,17 @@ if [ -z $IS_GREEN  ];then # blue라면
   echo "### BLUE => GREEN ####"
 
   echo "1. get green image"
-  docker-compose pull green # green으로 이미지를 내려받습니다.
+  docker-compose -p hapjuhasil pull green # green으로 이미지를 내려받습니다.
 
   echo "2. green container up"
-  docker-compose up -d green # green 컨테이너 실행
+  docker-compose -p hapjuhasil up -d green # green 컨테이너 실행
 
   while [ 1 = 1 ]; do
   echo "3. green health check..."
   sleep 3
 
   REQUEST=$(curl http://127.0.0.1:8081) # green으로 request
-    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지
+    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지a
             echo "health check success"
             break ;
             fi
@@ -34,10 +34,10 @@ else
   echo "### GREEN => BLUE ###"
 
   echo "1. get blue image"
-  docker-compose pull blue
+  docker-compose -p hapjuhasil pull blue
 
   echo "2. blue container up"
-  docker-compose up -d blue
+  docker-compose -p hapjuhasil up -d blue
 
   while [ 1 = 1 ]; do
     echo "3. blue health check..."
