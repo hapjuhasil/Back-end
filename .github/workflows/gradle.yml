@@ -95,8 +95,8 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_REPO }}
-            chmod 777 deploy.sh
-            ./deploy.sh      
+            chmod 777 server/deploy.sh
+            .server/deploy.sh      
             sudo docker image prune -f
     
       
