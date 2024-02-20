@@ -94,11 +94,10 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.KEY }}
           script: |
+            cd server
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             chmod 777 server/deploy.sh
-            server/deploy.sh
-            cd server
-            sudo docker-compose -f docker-compose.yml up
+            server/deploy.sh      
             sudo docker image prune -f
     
       
