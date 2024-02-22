@@ -37,7 +37,7 @@ else
   docker-compose -p hapjuhasil pull blue
 
   echo "2. blue container up"
-  docker-compose up -d blue
+  docker-compose -p hapjuhasil up -d blue
 
   while [ 1 = 1 ]; do
     echo "3. blue health check..."
