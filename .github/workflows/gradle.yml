@@ -62,7 +62,7 @@ jobs:
           aws-region: ap-northeast-2
 
 
-      ## 
+      ## docker 사용자 추가
       - name: Add user to Docker group
         uses: appleboy/ssh-action@master
         with:
