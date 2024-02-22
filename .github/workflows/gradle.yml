@@ -83,7 +83,7 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.KEY }}
           port: 22
-          source: "server/deploy.sh"
+          source: "deploy.sh"
           target: "/home/ubuntu/"
 
        ## 도커 허브에서 jar파일 및 pull후에 컴포즈 up
@@ -94,7 +94,6 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.KEY }}
           script: |
-            cd server
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             chmod 777 deploy.sh
             ./deploy.sh      
