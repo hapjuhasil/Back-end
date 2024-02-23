@@ -3,8 +3,15 @@
 IS_GREEN=$(docker ps --filter "name=green" --format "{{.Names}}")
 DEFAULT_CONF=" /etc/nginx/nginx.conf"
 
-echo docker ps
-echo docker ps -a
+RUNNING_CONTAINERS=$(docker ps --format "{{.Names}}")
+for container in $RUNNING_CONTAINERS; do
+  if [[ $container == "green" ]]; then
+    echo "The 'green' container is running."
+  fi
+  if [[ $container == "blue" ]]; then
+    echo "The 'blue' container is running."
+  fi
+done
 
 
 if [ "$IS_GREEN" != "green"  ];then
