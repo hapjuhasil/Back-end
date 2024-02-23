@@ -41,6 +41,7 @@ jobs:
 
       # (6) docker build & push to production
       - name: Docker build & push to DockerHub
+        working-directory: server
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t ${{ secrets.DOCKER_REPO }} .
@@ -59,8 +60,22 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-          
-      ## deploy.sh 파일 서버로 전달하기(복사 후 붙여넣기)
+
+
+      ## docker 사용자 추가
+      - name: Add user to Docker group
+        uses: appleboy/ssh-action@master
+        with:
+          username: ubuntu
+          host: ${{ secrets.DEV_HOST }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            sudo usermod -aG docker ubuntu
+            newgrp docker    
+
+            
+      ##  deploy.sh 파일 서버로 전달하기(복사 후 붙여넣기)
       - name: Send deploy.sh
         uses: appleboy/scp-action@master
         with:
@@ -68,24 +83,24 @@ jobs:
           host: ${{ secrets.DEV_HOST }}
           key: ${{ secrets.KEY }}
           port: 22
-          source: "./deploy.sh"
+          source: "server/deploy.sh"
           target: "/home/ubuntu/"
 
-      # (10) 서버에 접속하여 도커 이미지를 pull 받고 실행하기
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v0.1.6
+       ## 도커 허브에서 jar파일 및 pull후에 컴포즈 up
+      - name: Deploy to Dev
+        uses: appleboy/ssh-action@master
         with:
+          username: ubuntu
           host: ${{ secrets.DEV_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.KEY }}
-          port: 22
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
-            sudo docker run -d --name spring-dev -p 8080:8080 -e spring.profiles.active=dev-env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
-              chmod 777 ./deploy.sh
-              ./deploy.sh
-              docker image prune -f
-
+            cd server
+            sudo docker pull ${{ secrets.DOCKER_REPO }}
+            docker ps
+            chmod 777 deploy.sh
+            ./deploy.sh      
+            docker ps
+            docker image prune -f
     
       
       - name: Gradle Caching
