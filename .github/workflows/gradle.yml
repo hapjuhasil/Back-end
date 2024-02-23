@@ -99,6 +99,7 @@ jobs:
             docker ps
             chmod 777 deploy.sh
             ./deploy.sh      
+            docker ps
             docker image prune -f
     
       
