@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IS_GREEN=$(docker ps --filter "name=^green$" --format "{{.Names}}")
+IS_GREEN=$(docker ps --filter "name=green" --format "{{.Names}}")
 DEFAULT_CONF=" /etc/nginx/nginx.conf"
 
 echo $IS_GREEN
