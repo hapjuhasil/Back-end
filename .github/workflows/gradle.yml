@@ -96,6 +96,7 @@ jobs:
           script: |
             cd server
             sudo docker pull ${{ secrets.DOCKER_REPO }}
+            docker ps
             chmod 777 deploy.sh
             ./deploy.sh      
             docker image prune -f
