@@ -3,9 +3,9 @@
 IS_GREEN=$(docker ps --filter "name=green" --format "{{.Names}}")
 DEFAULT_CONF=" /etc/nginx/nginx.conf"
 
-echo $IS_GREEN
+echo docker ps
+echo docker ps -a
 
-echo "$IS_GREEN"
 
 if [ "$IS_GREEN" != "green"  ];then
 
